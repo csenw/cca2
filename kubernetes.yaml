@@ -1,0 +1,72 @@
+# INFS3208 A2 
+# Do not rename Kubernetes objects, labels, ports, or volume names.
+
+# -----------------------------------------------------------------------------
+# 1. Shared FAISS configuration
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: faiss-config
+
+
+---
+# -----------------------------------------------------------------------------
+# 2. Headless Service for stable FAISS shard network identities
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: faiss-headless
+
+
+---
+# -----------------------------------------------------------------------------
+# 3. FAISS shard StatefulSet
+# Use the following image for the StatefulSet: 
+# australia-southeast1-docker.pkg.dev/infs3208-429801/infs3208-a2/faiss-shard:2026-a2
+# -----------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: faiss-shard
+
+
+---
+# -----------------------------------------------------------------------------
+# 4. PROVIDED Jupyter workspace PVC
+# Do not modify this object. It protects notebook changes if the Jupyter Pod is
+# recreated while you are working.
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jupyter-workspace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+# -----------------------------------------------------------------------------
+# 5. Jupyter Notebook Deployment
+# Use the following image for the Deployment: 
+# australia-southeast1-docker.pkg.dev/infs3208-429801/infs3208-a2/jupyter:2026-a2
+# -----------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyter
+
+
+---
+# -----------------------------------------------------------------------------
+# 6. Public Jupyter Service
+# -----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyter-service
