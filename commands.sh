@@ -10,12 +10,7 @@
 # YOUR COMMAND(S):
 
 
-# Task 3: Display Kubernetes Services so you can identify the
-# EXTERNAL-IP assigned to jupyter-service.
-# YOUR COMMAND:
-
-
-# Task 4: Display PersistentVolumeClaims and show detailed
+# Task 3: Display PersistentVolumeClaims and show detailed
 # information for the faiss-shard StatefulSet.
 # YOUR COMMAND(S):
 
